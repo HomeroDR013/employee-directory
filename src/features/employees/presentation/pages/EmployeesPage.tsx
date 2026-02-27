@@ -21,14 +21,21 @@ export function EmployeesPage({ onSelectEmployee }: EmployeesPageProps) {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-gray-900">Employees</h2>
-        <button
-          onClick={() => setShowForm((prev) => !prev)}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:ring-offset-0"
-        >
-          {showForm ? "Cancel" : "Add Employee"}
-        </button>
+      <div className="mb-8 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6 shadow-md">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Employees</h2>
+            <p className="mt-1 text-sm text-blue-100">
+              Manage your team — {employees.length} member{employees.length !== 1 && "s"} and counting.
+            </p>
+          </div>
+          <button
+            onClick={() => setShowForm((prev) => !prev)}
+            className="rounded-lg border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white shadow-sm backdrop-blur-sm transition-colors hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 focus:ring-offset-0"
+          >
+            {showForm ? "Cancel" : "+ Add Employee"}
+          </button>
+        </div>
       </div>
 
       {showForm && (
