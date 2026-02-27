@@ -1,0 +1,112 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "firstName": "Ana",
+      "lastName": "García",
+      "email": "ana.garcia@apsys.mx",
+      "position": "Frontend Developer",
+      "department": "Engineering",
+      "startDate": "2022-03-15",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "firstName": "Carlos",
+      "lastName": "Mendoza",
+      "email": "carlos.mendoza@apsys.mx",
+      "position": "Backend Developer",
+      "department": "Engineering",
+      "startDate": "2021-08-01",
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "firstName": "Sofía",
+      "lastName": "Ramírez",
+      "email": "sofia.ramirez@apsys.mx",
+      "position": "UX Designer",
+      "department": "Design",
+      "startDate": "2023-01-10",
+      "status": "active"
+    },
+    {
+      "id": 4,
+      "firstName": "Luis",
+      "lastName": "Torres",
+      "email": "luis.torres@apsys.mx",
+      "position": "Project Manager",
+      "department": "Operations",
+      "startDate": "2020-05-20",
+      "status": "active"
+    },
+    {
+      "id": 5,
+      "firstName": "María",
+      "lastName": "López",
+      "email": "maria.lopez@apsys.mx",
+      "position": "QA Engineer",
+      "department": "Engineering",
+      "startDate": "2022-11-03",
+      "status": "active"
+    },
+    {
+      "id": 6,
+      "firstName": "Roberto",
+      "lastName": "Díaz",
+      "email": "roberto.diaz@apsys.mx",
+      "position": "DevOps Engineer",
+      "department": "Infrastructure",
+      "startDate": "2021-02-14",
+      "status": "active"
+    },
+    {
+      "id": 7,
+      "firstName": "Patricia",
+      "lastName": "Hernández",
+      "email": "patricia.hernandez@apsys.mx",
+      "position": "HR Specialist",
+      "department": "Human Resources",
+      "startDate": "2019-09-01",
+      "status": "inactive"
+    },
+    {
+      "id": 8,
+      "firstName": "Jorge",
+      "lastName": "Vega",
+      "email": "jorge.vega@apsys.mx",
+      "position": "Fullstack Developer",
+      "department": "Engineering",
+      "startDate": "2023-06-05",
+      "status": "active"
+    },
+    {
+      "id": 9,
+      "firstName": "Alejandra",
+      "lastName": "Reyes",
+      "email": "alejandra.reyes@apsys.mx",
+      "position": "Product Owner",
+      "department": "Operations",
+      "startDate": "2020-10-12",
+      "status": "active"
+    },
+    {
+      "id": 10,
+      "firstName": "Miguel",
+      "lastName": "Cruz",
+      "email": "miguel.cruz@apsys.mx",
+      "position": "Data Analyst",
+      "department": "Analytics",
+      "startDate": "2022-07-18",
+      "status": "active"
+    }
+  ],
+  "departments": [
+    { "id": 1, "name": "Engineering" },
+    { "id": 2, "name": "Design" },
+    { "id": 3, "name": "Operations" },
+    { "id": 4, "name": "Infrastructure" },
+    { "id": 5, "name": "Human Resources" },
+    { "id": 6, "name": "Analytics" }
+  ]
+}
