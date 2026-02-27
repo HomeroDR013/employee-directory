@@ -11,9 +11,10 @@ const columnHelper = createColumnHelper<Employee>();
 
 interface EmployeesTableProps {
   employees: Employee[];
+  onSelectEmployee?: (employeeId: number) => void;
 }
 
-export function EmployeesTable({ employees }: EmployeesTableProps) {
+export function EmployeesTable({ employees, onSelectEmployee }: EmployeesTableProps) {
   const columns = useMemo(
     () => [
       columnHelper.accessor((row) => `${row.firstName} ${row.lastName}`, {
@@ -76,7 +77,11 @@ export function EmployeesTable({ employees }: EmployeesTableProps) {
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white">
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className="hover:bg-gray-50">
+            <tr
+              key={row.id}
+              className={`hover:bg-gray-50 ${onSelectEmployee ? "cursor-pointer" : ""}`}
+              onClick={() => onSelectEmployee?.(row.original.id)}
+            >
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id} className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
