@@ -34,6 +34,12 @@ Use `tagTypes` with `providesTags` and `invalidatesTags` for automatic cache inv
 - `components/[FeatureName]Table.tsx` — Table showing the list
 - `components/[FeatureName]Form.tsx` — Form using React Hook Form + Zod validation
 
+## Review Step
+
+After creating all files, invoke the ui-ux-reviewer agent to review 
+the table component. Implement any feedback that relates to accessibility 
+or critical UX issues before considering the feature complete.
+
 ## Rules
 
 - Follow the architecture in @CLAUDE.md strictly
