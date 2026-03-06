@@ -10,6 +10,7 @@ const employeeCreateSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
+  phone: z.string().min(1, "Phone number is required"),
   position: z.string().min(1, "Position is required"),
   department: z.string().min(1, "Department is required"),
   startDate: z.string().min(1, "Start date is required"),
@@ -31,7 +32,8 @@ const inputError =
 
 export function EmployeeCreateForm({ onSuccess }: EmployeeCreateFormProps) {
   const { data: departments = [] } = useGetDepartmentsQuery();
-  const [addEmployee, { isLoading: isSubmitting }] = useAddEmployeeMutation();
+  const [addEmployee, { isLoading: isSubmitting, error: submitError }] =
+    useAddEmployeeMutation();
 
   const {
     register,
@@ -107,7 +109,7 @@ export function EmployeeCreateForm({ onSuccess }: EmployeeCreateFormProps) {
             )}
           </div>
 
-          <div className="sm:col-span-2">
+          <div>
             <label
               htmlFor="email"
               className="mb-1.5 block text-sm font-medium text-gray-700"
@@ -124,6 +126,27 @@ export function EmployeeCreateForm({ onSuccess }: EmployeeCreateFormProps) {
             {errors.email && (
               <p className="mt-1.5 text-xs text-red-600">
                 {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label
+              htmlFor="phone"
+              className="mb-1.5 block text-sm font-medium text-gray-700"
+            >
+              Phone
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              placeholder="e.g. +52 555 123 4567"
+              {...register("phone")}
+              className={errors.phone ? inputError : inputNormal}
+            />
+            {errors.phone && (
+              <p className="mt-1.5 text-xs text-red-600">
+                {errors.phone.message}
               </p>
             )}
           </div>
@@ -232,6 +255,12 @@ export function EmployeeCreateForm({ onSuccess }: EmployeeCreateFormProps) {
       </fieldset>
 
       <hr className="border-gray-200" />
+
+      {submitError && (
+        <p className="text-sm text-red-600" role="alert">
+          Failed to create employee. Please try again.
+        </p>
+      )}
 
       <div className="flex items-center justify-end gap-3">
         <button

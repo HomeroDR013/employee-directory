@@ -7,6 +7,7 @@ const employeeDetailSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
+  phone: z.string().min(1, "Phone number is required"),
   position: z.string().min(1, "Position is required"),
   department: z.string().min(1, "Department is required"),
   startDate: z.string().min(1, "Start date is required"),
@@ -46,6 +47,7 @@ export function EmployeeDetailForm({
           firstName: employee.firstName,
           lastName: employee.lastName,
           email: employee.email,
+          phone: employee.phone,
           position: employee.position,
           department: employee.department,
           startDate: employee.startDate,
@@ -109,7 +111,7 @@ export function EmployeeDetailForm({
             )}
           </div>
 
-          <div className="sm:col-span-2">
+          <div>
             <label
               htmlFor="email"
               className="mb-1.5 block text-sm font-medium text-gray-700"
@@ -126,6 +128,27 @@ export function EmployeeDetailForm({
             {errors.email && (
               <p className="mt-1.5 text-xs text-red-600">
                 {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label
+              htmlFor="phone"
+              className="mb-1.5 block text-sm font-medium text-gray-700"
+            >
+              Phone
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              placeholder="e.g. +52 555 123 4567"
+              {...register("phone")}
+              className={errors.phone ? inputError : inputNormal}
+            />
+            {errors.phone && (
+              <p className="mt-1.5 text-xs text-red-600">
+                {errors.phone.message}
               </p>
             )}
           </div>

@@ -11,7 +11,22 @@
       "mcp__playwright__browser_run_code",
       "mcp__playwright__browser_hover",
       "mcp__playwright__browser_snapshot",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(git:*)",
+      "mcp__github-personal__create_issue",
+      "Bash(gh issue:*)",
+      "Bash(npx tsc:*)",
+      "mcp__github-personal__create_pull_request",
+      "mcp__github-personal__get_pull_request",
+      "Bash(gh pr:*)",
+      "mcp__github-personal__merge_pull_request",
+      "mcp__github-personal__add_issue_comment",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_close",
+      "Bash(npx skills:*)",
+      "Bash(npx:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

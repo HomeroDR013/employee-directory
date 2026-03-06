@@ -1,23 +1,27 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { z } from "zod";
+import { apiSlice } from "../../../shared/data/apiSlice";
 import type { Employee, Department } from "../domain/employee.types";
+import {
+  employeeSchema,
+  departmentSchema,
+} from "../domain/employee.types";
 
-export const employeesApi = createApi({
-  reducerPath: "employeesApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
-  tagTypes: ["Employees", "Department"],
+const employeesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
       query: () => "/employees",
+      responseSchema: z.array(employeeSchema),
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: "Employees" as const, id })),
-              { type: "Employees", id: "LIST" },
+              ...result.map(({ id }) => ({ type: "Employee" as const, id })),
+              { type: "Employee", id: "LIST" },
             ]
-          : [{ type: "Employees", id: "LIST" }],
+          : [{ type: "Employee", id: "LIST" }],
     }),
     getDepartments: builder.query<Department[], void>({
       query: () => "/departments",
+      responseSchema: z.array(departmentSchema),
       providesTags: ["Department"],
     }),
     addEmployee: builder.mutation<Employee, Omit<Employee, "id">>({
@@ -26,7 +30,8 @@ export const employeesApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "Employees", id: "LIST" }],
+      responseSchema: employeeSchema,
+      invalidatesTags: [{ type: "Employee", id: "LIST" }],
     }),
   }),
 });

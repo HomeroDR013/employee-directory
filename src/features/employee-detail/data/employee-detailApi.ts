@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { apiSlice } from "../../../shared/data/apiSlice";
 import type {
   EmployeeDetail,
   CreateEmployeeDetail,
@@ -6,10 +6,7 @@ import type {
   Department,
 } from "../domain/employee-detail.types";
 
-export const employeeDetailApi = createApi({
-  reducerPath: "employeeDetailApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
-  tagTypes: ["EmployeeDetail", "Department"],
+const employeeDetailApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getEmployeeDetails: builder.query<EmployeeDetail[], void>({
       query: () => "/employees",

@@ -7,6 +7,7 @@ export interface EmployeeDetail {
   email: string;
   position: string;
   department: string;
+  phone: string;
   startDate: string;
   status: EmployeeStatus;
 }
