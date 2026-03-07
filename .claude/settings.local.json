@@ -26,11 +26,33 @@
       "mcp__playwright__browser_evaluate",
       "mcp__playwright__browser_close",
       "Bash(npx skills:*)",
-      "Bash(npx:*)"
+      "Bash(npx:*)",
+      "WebSearch",
+      "mcp__atlassian-jira__jira_get",
+      "mcp__atlassian-jira__jira_post",
+      "WebFetch(domain:skills.sh)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(npm install:*)",
+      "Bash(curl:*)",
+      "mcp__playwright__browser_type"
     ]
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "context7"
-  ]
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash(git commit*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c \"cd 'C:/devel/Claude Code Tests/employee-directory' && npm run build --silent 2>&1; BUILD=$?; npm run lint --silent 2>&1; LINT=$?; if [ $BUILD -ne 0 ] || [ $LINT -ne 0 ]; then echo 'BLOCKED: build or lint failed. Fix errors before committing.'; exit 1; fi\""
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -10,16 +10,25 @@ interface EmployeesPageProps {
 export function EmployeesPage({ onSelectEmployee }: EmployeesPageProps) {
   const [showForm, setShowForm] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const { data: employees = [], isLoading, error } = useGetEmployeesQuery();
   const { data: departments = [] } = useGetDepartmentsQuery();
 
-  const filteredEmployees = useMemo(
-    () =>
-      selectedDepartment === "All"
-        ? employees
-        : employees.filter((e) => e.department === selectedDepartment),
-    [employees, selectedDepartment],
-  );
+  const filteredEmployees = useMemo(() => {
+    let result = employees;
+    if (selectedDepartment !== "All") {
+      result = result.filter((e) => e.department === selectedDepartment);
+    }
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(
+        (e) =>
+          e.firstName.toLowerCase().includes(q) ||
+          e.lastName.toLowerCase().includes(q),
+      );
+    }
+    return result;
+  }, [employees, selectedDepartment, searchQuery]);
 
   if (isLoading) {
     return (
@@ -49,7 +58,7 @@ export function EmployeesPage({ onSelectEmployee }: EmployeesPageProps) {
           <div>
             <h2 className="text-xl font-bold text-white md:text-2xl">Employees</h2>
             <p className="mt-1 text-sm text-blue-100">
-              Manage your team — {filteredEmployees.length} member{filteredEmployees.length !== 1 && "s"} and counting.
+              Manage your team — {employees.length} member{employees.length !== 1 && "s"} and counting.
             </p>
           </div>
           <button
@@ -70,26 +79,48 @@ export function EmployeesPage({ onSelectEmployee }: EmployeesPageProps) {
         </div>
       )}
 
-      <div className="mb-4 flex items-center gap-3">
-        <label htmlFor="department-filter" className="text-sm font-medium text-gray-700">
-          Department
-        </label>
-        <select
-          id="department-filter"
-          value={selectedDepartment}
-          onChange={(e) => setSelectedDepartment(e.target.value)}
-          className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-        >
-          <option value="All">All</option>
-          {departments.map((dept) => (
-            <option key={dept.id} value={dept.name}>
-              {dept.name}
-            </option>
-          ))}
-        </select>
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center" role="search">
+        <div className="flex items-center gap-3">
+          <label htmlFor="search-employees" className="sr-only">
+            Search by name
+          </label>
+          <input
+            id="search-employees"
+            type="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by name..."
+            autoComplete="off"
+            spellCheck={false}
+            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:w-auto"
+          />
+        </div>
+        <div className="flex items-center gap-3">
+          <label htmlFor="department-filter" className="text-sm font-medium text-gray-700">
+            Department
+          </label>
+          <select
+            id="department-filter"
+            value={selectedDepartment}
+            onChange={(e) => setSelectedDepartment(e.target.value)}
+            className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          >
+            <option value="All">All</option>
+            {departments.map((dept) => (
+              <option key={dept.id} value={dept.name}>
+                {dept.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      <EmployeesTable employees={filteredEmployees} onSelectEmployee={onSelectEmployee} />
+      <EmployeesTable
+        employees={filteredEmployees}
+        onSelectEmployee={onSelectEmployee}
+        searchQuery={searchQuery}
+        onClearSearch={() => setSearchQuery("")}
+      />
     </div>
   );
 }
