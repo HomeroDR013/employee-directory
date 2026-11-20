@@ -34,17 +34,53 @@ Use `tagTypes` with `providesTags` and `invalidatesTags` for automatic cache inv
 - `components/[FeatureName]Table.tsx` — Table showing the list
 - `components/[FeatureName]Form.tsx` — Form using React Hook Form + Zod validation
 
-## Review Step
+## Implementation Rules
 
-After creating all files, invoke the ui-ux-reviewer agent to review 
-the table component. Implement any feedback that relates to accessibility 
-or critical UX issues before considering the feature complete.
-
-## Rules
-
-- Follow the architecture in @CLAUDE.md strictly
+- Follow the architecture in CLAUDE.md strictly
+- Use context7 to check up-to-date docs for RTK Query, React Hook Form, Zod, TanStack Table before using them
+- Use the **react-dev** skill when building components to ensure proper TypeScript typing, hook usage, event handling, and React 19 best practices
+- Apply **frontend-design** principles: use intentional typography and spacing with Tailwind CSS, match the existing app aesthetic, avoid generic layouts. Do not over-design — match the style and complexity of the existing codebase.
 - Use RTK Query for ALL data fetching — no useEffect + fetch
 - Use React Hook Form + Zod for ALL forms
 - Add proper TypeScript types everywhere — no `any`
 - Keep each file focused on a single responsibility
 - Do NOT add the feature to any routes or navigation yet
+
+## Build Verification
+
+After creating all files, run:
+```
+npm run build
+npm run lint
+```
+Fix any errors before proceeding to reviews.
+
+## Write Tests
+
+Write tests for the new feature:
+
+1. **Component tests** for the table and form components — verify they render correctly and handle user interactions.
+2. **Behavior tests** for key user flows — loading states, form submission, validation errors.
+3. Run all tests and ensure they pass.
+
+If the project does not yet have a testing setup, ask the user whether to add one before writing tests.
+
+## Code Quality Review
+
+Invoke the **code-quality-review** skill on all newly created files. Check for:
+- Proper adherence to the apsys architecture pattern
+- Type safety and no `any` usage
+- Correct RTK Query patterns (tags, cache invalidation)
+- Correct React Hook Form + Zod integration
+
+Fix any issues found.
+
+## Visual UI/UX Review
+
+1. Start the dev server (`npm run dev`) and mock API (`npm run mock`) if not already running.
+2. Use Playwright to navigate to the feature's page.
+3. Take a snapshot of the accessibility tree to verify semantic HTML.
+4. Take screenshots at desktop (1280x720) and mobile (375x667) viewports.
+5. Exercise the main interactions (open form, fill fields, submit) via Playwright to verify they work.
+6. Invoke the **ui-ux-reviewer** agent to review the screenshots.
+7. Implement any feedback that relates to accessibility or critical UX issues before considering the feature complete.

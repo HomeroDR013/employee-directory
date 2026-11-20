@@ -15,9 +15,11 @@ const columnHelper = createColumnHelper<Employee>();
 interface EmployeesTableProps {
   employees: Employee[];
   onSelectEmployee?: (employeeId: number) => void;
+  searchQuery?: string;
+  onClearSearch?: () => void;
 }
 
-export function EmployeesTable({ employees, onSelectEmployee }: EmployeesTableProps) {
+export function EmployeesTable({ employees, onSelectEmployee, searchQuery, onClearSearch }: EmployeesTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const columns = useMemo(
@@ -71,8 +73,21 @@ export function EmployeesTable({ employees, onSelectEmployee }: EmployeesTablePr
 
   if (employees.length === 0) {
     return (
-      <div className="rounded-lg border border-gray-200 bg-white py-12 text-center">
-        <p className="text-sm text-gray-500">No employees found.</p>
+      <div className="rounded-lg border border-gray-200 bg-white py-12 text-center" aria-live="polite" aria-atomic="true">
+        <p className="text-sm text-gray-500">
+          {searchQuery?.trim()
+            ? `No employees match "${searchQuery.trim()}".`
+            : "No employees found."}
+        </p>
+        {searchQuery?.trim() && onClearSearch && (
+          <button
+            type="button"
+            onClick={onClearSearch}
+            className="mt-3 text-sm font-medium text-blue-600 hover:text-blue-800"
+          >
+            Clear search
+          </button>
+        )}
       </div>
     );
   }
@@ -131,7 +146,7 @@ export function EmployeesTable({ employees, onSelectEmployee }: EmployeesTablePr
           </tbody>
         </table>
       </div>
-      <p className="mt-3 text-sm text-gray-500">
+      <p className="mt-3 text-sm text-gray-500" aria-live="polite" aria-atomic="true">
         Showing {employees.length} employee{employees.length !== 1 && "s"}
       </p>
     </div>
